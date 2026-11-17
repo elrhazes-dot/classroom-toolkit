@@ -759,7 +759,14 @@ function loadState(key, fallback) {
 }
 
 function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, c => ({'&':'&','<':'<','>':'>','"':'"',"'":'''}[c]));
+  return String(str).replace(/[&<>"']/g, c => {
+    if (c === '&') return '&';
+    if (c === '<') return '<';
+    if (c === '>') return '>';
+    if (c === '"') return '"';
+    if (c === "'") return "'";
+    return c;
+  });
 }
 
 function playSound(freq = 880, duration = 300, type = 'sine') {
