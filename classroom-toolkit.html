@@ -896,9 +896,7 @@ $('#picker-clear').addEventListener('click', () => {
 
 $('#picker-load-sample').addEventListener('click', () => {
   const sample = [
-    'Ahmad','Budi','Citra','Dewi','Eka','Fajar','Gita','Hadi',
-    'Intan','Joko','Kartika','Lestari','Mira','Nanda','Oki','Putri',
-    'Qori','Rani','Siti','Tono','Umi','Vina','Wawan','Xena','Yudi','Zara'
+    'DIPO SILMI RESPATI','FARISHA PUTRI NAFISAH','KAESAR ALFARO PRATAMA','KANAYA SYAHILA OKTAVIANA','KANDITA SILVIA','MEYSA PUTRI RAMADAN','MUHAMAD RIFKI','MUHAMMAD FIKRI BAIHAQI','MUHAMMAD RIZKI SETIAWAN','MUHAMMAD SYABIAN ASTA ALHADID','NAWALIA HUSNA','QHINANTY DESTIANI','QUEENA ZHIVANA ALSYA','RADITYA MAULANA YUSUF','RAISA APRILIANI','RAISYA AL ZHAAFIER AHMAD','RAYINA SYAKIRA MUMTAZ','REPAN KURNIAWAN','SALMA AZZAHRA MAHARANI','SALWA AZZAHRA MAHARANI','SANDI MUHAMAD RAMDAN','SHEZA DIANA NURAZEEMA','SILMI DAMAR RESPATI','TIARA AZZAHRA PUTRI','VERA SEGITA SILVIANI','VIRENDRA AL FAEYZA'
   ];
   pickerStudents = sample.map(name => ({ name, group: '' }));
   selectedStudentIndices.clear();
@@ -1195,12 +1193,10 @@ $('#points-clear').addEventListener('click', () => {
 });
 
 $('#points-load-sample').addEventListener('click', () => {
-  const sample = [
-    { name: 'Ahmad', points: 45 }, { name: 'Budi', points: 38 }, { name: 'Citra', points: 52 },
-    { name: 'Dewi', points: 41 }, { name: 'Eka', points: 33 }, { name: 'Fajar', points: 47 },
-    { name: 'Gita', points: 29 }, { name: 'Hadi', points: 36 }
+  const sampleNames = [
+    'DIPO SILMI RESPATI','FARISHA PUTRI NAFISAH','KAESAR ALFARO PRATAMA','KANAYA SYAHILA OKTAVIANA','KANDITA SILVIA','MEYSA PUTRI RAMADAN','MUHAMAD RIFKI','MUHAMMAD FIKRI BAIHAQI','MUHAMMAD RIZKI SETIAWAN','MUHAMMAD SYABIAN ASTA ALHADID','NAWALIA HUSNA','QHINANTY DESTIANI','QUEENA ZHIVANA ALSYA','RADITYA MAULANA YUSUF','RAISA APRILIANI','RAISYA AL ZHAAFIER AHMAD','RAYINA SYAKIRA MUMTAZ','REPAN KURNIAWAN','SALMA AZZAHRA MAHARANI','SALWA AZZAHRA MAHARANI','SANDI MUHAMAD RAMDAN','SHEZA DIANA NURAZEEMA','SILMI DAMAR RESPATI','TIARA AZZAHRA PUTRI','VERA SEGITA SILVIANI','VIRENDRA AL FAEYZA'
   ];
-  pointsStudents = sample;
+  pointsStudents = sampleNames.map(name => ({ name, points: 0 }));
   pointsSelectedIndices.clear();
   saveState('points-students', pointsStudents);
   renderPointsTable();
