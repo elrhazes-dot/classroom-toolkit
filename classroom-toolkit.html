@@ -759,14 +759,12 @@ function loadState(key, fallback) {
 }
 
 function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, c => {
-    if (c === '&') return '&';
-    if (c === '<') return '<';
-    if (c === '>') return '>';
-    if (c === '"') return '"';
-    if (c === "'") return "'";
-    return c;
-  });
+  return String(str)
+    .replace(/&/g, '&')
+    .replace(/</g, '<')
+    .replace(/>/g, '>')
+    .replace(/"/g, '"')
+    .replace(/'/g, "'");
 }
 
 function playSound(freq = 880, duration = 300, type = 'sine') {
@@ -1106,7 +1104,7 @@ function setTimerFromInputs() {
   }
 }
 
-$('#timer-hours, #timer-minutes, #timer-seconds').forEach(el => el.addEventListener('change', setTimerFromInputs));
+$$('#timer-hours, #timer-minutes, #timer-seconds').forEach(el => el.addEventListener('change', setTimerFromInputs));
 
 timerStartBtn.addEventListener('click', () => {
   setTimerFromInputs();
