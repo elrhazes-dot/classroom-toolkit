@@ -50,6 +50,44 @@
     --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.12);
   }
 }
+:root[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-elevated: #1e293b;
+  --bg-card: #1e293b;
+  --border: #334155;
+  --ink: #f1f5f9;
+  --ink-muted: #94a3b8;
+  --accent: #22d3ee;
+  --accent-strong: #06b6d4;
+  --accent-bg: rgba(34, 211, 238, 0.12);
+  --success: #22c55e;
+  --success-bg: rgba(34, 197, 94, 0.12);
+  --warning: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.12);
+  --danger: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.12);
+  --shadow: 0 4px 24px rgba(0,0,0,0.35);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.45);
+}
+:root[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --border: #e2e8f0;
+  --ink: #0f172a;
+  --ink-muted: #475569;
+  --accent: #06b6d4;
+  --accent-strong: #0891b2;
+  --accent-bg: rgba(6, 182, 212, 0.12);
+  --success: #16a34a;
+  --success-bg: rgba(22, 163, 74, 0.12);
+  --warning: #d97706;
+  --warning-bg: rgba(217, 119, 6, 0.12);
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.12);
+  --shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.12);
+}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { font-size: 16px; }
 body {
@@ -231,7 +269,9 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
 .points-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .points-table th, .points-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
 .points-table th { font-weight: 600; color: var(--ink-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+.points-table tr { cursor: pointer; }
 .points-table tr:hover td { background: var(--bg); }
+.points-table tr.selected td { background: var(--accent-bg); }
 .points-table .rank { font-family: var(--font-mono); font-weight: 700; width: 50px; }
 .points-table .name { font-weight: 500; }
 .points-table .points { font-family: var(--font-mono); font-weight: 700; color: var(--accent); text-align: right; }
@@ -250,7 +290,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
 .quiz-preview-option { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: all var(--transition); }
 .quiz-preview-option:hover { border-color: var(--accent); background: var(--accent-bg); }
 .quiz-preview-option.correct { border-color: var(--success); background: var(--success-bg); }
-.quiz-preview-option input { accent-color: var(--accent); }
+.quiz-preview-option input { accent-color: var(--accent); width: auto; }
 .rpp-form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 @media (max-width: 900px) { .rpp-form { grid-template-columns: 1fr; } }
 .rpp-full { grid-column: 1 / -1; }
@@ -273,7 +313,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
 .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 .tweaks { position: fixed; bottom: 24px; left: 24px; z-index: 50; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow-lg); font-size: 13px; }
-.tweaks summary { cursor: pointer; font-weight: 600; color: var(--ink); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.tweaks summary { cursor: pointer; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
 .tweaks[open] summary { margin-bottom: 12px; }
 .tweak-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
 .tweak-row:last-child { margin-bottom: 0; }
@@ -282,14 +322,14 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
 .tweak-label select { padding: 6px 10px; font-size: 13px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--ink); }
 @media (max-width: 700px) {
   .app { grid-template-columns: 1fr; }
-  .sidebar { position: fixed; bottom: 0; left: 0; right: 0; top: auto; height: auto; max-height: 50vh; border-right: none; border-top: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; flex-direction: row; padding: 8px; justify-content: space-around; z-index: 200; transform: translateY(100%); transition: transform 250ms ease; }
-  .sidebar.open { transform: none; }
+  .sidebar { position: fixed; bottom: 0; left: 0; right: 0; top: auto; height: auto; max-height: 50vh; border-right: none; border-top: 1px solid var(--border); border-radius: var(--radius) var(--radius) 0 0; flex-direction: row; padding: 8px; justify-content: space-around; z-index: 200; transform: none; }
   .sidebar-header { display: none; }
-  .sidebar-nav { flex-direction: row; gap: 0; }
-  .nav-btn { padding: 12px; border-radius: var(--radius-sm); font-size: 0; }
+  .sidebar-nav { flex-direction: row; gap: 4px; width: 100%; justify-content: space-around; }
+  .nav-btn { padding: 12px; border-radius: var(--radius-sm); font-size: 0; justify-content: center; width: auto; }
+  .nav-btn svg { display: none; }
   .nav-btn::before { content: attr(data-icon); font-size: 20px; }
   .main { padding: 20px; padding-bottom: 120px; }
-  .tweaks { left: 12px; right: 12px; bottom: 12px; border-radius: var(--radius) var(--radius) 0 0; }
+  .tweaks { left: 12px; right: 12px; bottom: 72px; }
 }
 @media (max-width: 700px) and (prefers-reduced-motion: reduce) { .sidebar { transition: none; } }
 </style>
@@ -314,7 +354,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
     <section class="panel active" id="panel-picker" aria-labelledby="picker-title">
       <header class="panel-header">
         <h1 class="panel-title" id="picker-title">Random Picker</h1>
-        <p class="panel-subtitle">Acak nama siswa, buat kelompok acak, atau pilih волонтер</p>
+        <p class="panel-subtitle">Acak nama siswa, buat kelompok acak, atau pilih sukarelawan</p>
       </header>
       <div class="card">
         <h2 class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Daftar Siswa</h2>
@@ -392,7 +432,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
         </div>
         <div class="form-group" style="margin-top: 20px;">
           <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-            <input type="checkbox" id="timer-sound" checked> <span>Suara notifikasi saat selesai</span>
+            <input type="checkbox" id="timer-sound" checked style="width: auto;"> <span>Suara notifikasi saat selesai</span>
           </label>
         </div>
       </div>
@@ -416,7 +456,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
           <button class="btn btn-ghost" id="points-clear" aria-label="Hapus semua">Hapus Semua</button>
           <button class="btn btn-ghost" id="points-export" aria-label="Ekspor CSV">Ekspor CSV</button>
           <button class="btn btn-ghost" id="points-import" aria-label="Impor CSV">Impor CSV</button>
-          <input type="file" id="points-file" accept=".csv" class="sr-only" aria-hidden="true">
+          <input type="file" id="points-file" accept=".csv,.txt" class="sr-only" aria-hidden="true">
         </div>
       </div>
       <div class="card">
@@ -549,7 +589,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
           </div>
           <div class="form-group">
             <label for="rpp-tahun-ajaran">Tahun Ajaran *</label>
-            <input type="text" id="rpp-tahun-ajaran" placeholder="Contoh: 2024/2025" aria-required="true">
+            <input type="text" id="rpp-tahun-ajaran" placeholder="Contoh: 2026/2027" aria-required="true">
           </div>
           <div class="form-group rpp-full">
             <label for="rpp-topik">Topik / Sub-topik *</label>
@@ -642,7 +682,7 @@ textarea { min-height: 100px; resize: vertical; font-family: var(--font-sans); }
   <div class="modal">
     <h3 class="modal-title" id="modal-title"></h3>
     <div id="modal-body"></div>
-    <div class="modal-actions">
+    <div class="modal-actions" id="modal-actions">
       <button class="btn btn-secondary" id="modal-cancel">Batal</button>
       <button class="btn btn-primary" id="modal-confirm">OK</button>
     </div>
@@ -713,9 +753,6 @@ class Sortable {
   onTouchMove(e) { e.preventDefault(); this.dragMove(e.touches[0].clientX, e.touches[0].clientY); }
   dragMove(x, y) {
     if (!this.dragEl) return;
-    const items = [...this.el.children].filter(c => c !== this.dragEl);
-    const rect = this.el.getBoundingClientRect();
-    // Simplified: just visual feedback
   }
   onMouseUp() { this.endDrag(); }
   onTouchEnd() { this.endDrag(); }
@@ -760,11 +797,11 @@ function loadState(key, fallback) {
 
 function escapeHtml(str) {
   return String(str)
-    .replace(/&/g, '&')
-    .replace(/</g, '<')
-    .replace(/>/g, '>')
-    .replace(/"/g, '"')
-    .replace(/'/g, "'");
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function playSound(freq = 880, duration = 300, type = 'sine') {
@@ -783,7 +820,7 @@ function playSound(freq = 880, duration = 300, type = 'sine') {
 }
 
 function notify(title, body) {
-  if (Notification.permission === 'granted') {
+  if ('Notification' in window && Notification.permission === 'granted') {
     new Notification(title, { body, icon: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🎯</text></svg>' });
   }
 }
@@ -845,7 +882,6 @@ function renderPickerList() {
     `;
     pickerList.appendChild(item);
   });
-  // Drag & drop reorder
   new Sortable(pickerList, {
     animation: 150,
     handle: '.drag-handle',
@@ -896,7 +932,9 @@ $('#picker-clear').addEventListener('click', () => {
 
 $('#picker-load-sample').addEventListener('click', () => {
   const sample = [
-    'DIPO SILMI RESPATI','FARISHA PUTRI NAFISAH','KAESAR ALFARO PRATAMA','KANAYA SYAHILA OKTAVIANA','KANDITA SILVIA','MEYSA PUTRI RAMADAN','MUHAMAD RIFKI','MUHAMMAD FIKRI BAIHAQI','MUHAMMAD RIZKI SETIAWAN','MUHAMMAD SYABIAN ASTA ALHADID','NAWALIA HUSNA','QHINANTY DESTIANI','QUEENA ZHIVANA ALSYA','RADITYA MAULANA YUSUF','RAISA APRILIANI','RAISYA AL ZHAAFIER AHMAD','RAYINA SYAKIRA MUMTAZ','REPAN KURNIAWAN','SALMA AZZAHRA MAHARANI','SALWA AZZAHRA MAHARANI','SANDI MUHAMAD RAMDAN','SHEZA DIANA NURAZEEMA','SILMI DAMAR RESPATI','TIARA AZZAHRA PUTRI','VERA SEGITA SILVIANI','VIRENDRA AL FAEYZA'
+    'Ahmad','Budi','Citra','Dewi','Eka','Fajar','Gita','Hadi',
+    'Intan','Joko','Kartika','Lestari','Mira','Nanda','Oki','Putri',
+    'Qori','Rani','Siti','Tono','Umi','Vina','Wawan','Xena','Yudi','Zara'
   ];
   pickerStudents = sample.map(name => ({ name, group: '' }));
   selectedStudentIndices.clear();
@@ -911,7 +949,7 @@ $('#picker-file').addEventListener('change', e => {
   const reader = new FileReader();
   reader.onload = ev => {
     const text = ev.target.result;
-    const lines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+    const lines = text.split(/\r?\n/).map(l => l.split(/[,;]/)[0].replace(/^"|"$/g, '').trim()).filter(l => l && l.toLowerCase() !== 'nama');
     pickerStudents = lines.map(name => ({ name, group: '' }));
     selectedStudentIndices.clear();
     saveState('picker-students', pickerStudents);
@@ -994,6 +1032,7 @@ $('#picker-pick-one').addEventListener('click', () => {
 });
 
 $('#picker-pick-group').addEventListener('click', () => {
+  if (pickerStudents.length === 0) { toast('Belum ada siswa', 'error'); return; }
   const groupSize = parseInt(prompt('Ukuran setiap kelompok:', '4') || '4', 10);
   if (!groupSize || groupSize < 2) return;
   const shuffled = [...pickerStudents].sort(() => Math.random() - 0.5);
@@ -1001,7 +1040,7 @@ $('#picker-pick-group').addEventListener('click', () => {
   for (let i = 0; i < shuffled.length; i += groupSize) {
     groups.push(shuffled.slice(i, i + groupSize));
   }
-  pickerStudents.forEach((s, idx) => { s.group = ''; });
+  pickerStudents.forEach((s) => { s.group = ''; });
   groups.forEach((g, gi) => {
     g.forEach(s => {
       const idx = pickerStudents.findIndex(p => p.name === s.name);
@@ -1011,7 +1050,7 @@ $('#picker-pick-group').addEventListener('click', () => {
   saveState('picker-students', pickerStudents);
   renderPickerList();
   pickerResultName.textContent = `${groups.length} Kelompok Dibuat`;
-  pickerResultSub.innerHTML = groups.map((g, i) => `<div style="margin: 4px 0;"><strong>Kelompok ${String.fromCharCode(65+i)}:</strong> ${g.map(s => s.name).join(', ')}</div>`).join('');
+  pickerResultSub.innerHTML = groups.map((g, i) => `<div style="margin: 4px 0;"><strong>Kelompok ${String.fromCharCode(65+i)}:</strong> ${g.map(s => escapeHtml(s.name)).join(', ')}</div>`).join('');
   pickerResult.style.display = 'block';
   playSound(523, 150);
   playSound(659, 150);
@@ -1074,7 +1113,6 @@ function pauseTimer() {
 
 function resumeTimer() {
   if (timerRunning) return;
-  timerRunning = true;
   timerResumeBtn.style.display = 'none';
   timerPauseBtn.style.display = 'inline-flex';
   startTimer();
@@ -1193,10 +1231,12 @@ $('#points-clear').addEventListener('click', () => {
 });
 
 $('#points-load-sample').addEventListener('click', () => {
-  const sampleNames = [
-    'DIPO SILMI RESPATI','FARISHA PUTRI NAFISAH','KAESAR ALFARO PRATAMA','KANAYA SYAHILA OKTAVIANA','KANDITA SILVIA','MEYSA PUTRI RAMADAN','MUHAMAD RIFKI','MUHAMMAD FIKRI BAIHAQI','MUHAMMAD RIZKI SETIAWAN','MUHAMMAD SYABIAN ASTA ALHADID','NAWALIA HUSNA','QHINANTY DESTIANI','QUEENA ZHIVANA ALSYA','RADITYA MAULANA YUSUF','RAISA APRILIANI','RAISYA AL ZHAAFIER AHMAD','RAYINA SYAKIRA MUMTAZ','REPAN KURNIAWAN','SALMA AZZAHRA MAHARANI','SALWA AZZAHRA MAHARANI','SANDI MUHAMAD RAMDAN','SHEZA DIANA NURAZEEMA','SILMI DAMAR RESPATI','TIARA AZZAHRA PUTRI','VERA SEGITA SILVIANI','VIRENDRA AL FAEYZA'
+  const sample = [
+    { name: 'Ahmad', points: 45 }, { name: 'Budi', points: 38 }, { name: 'Citra', points: 52 },
+    { name: 'Dewi', points: 41 }, { name: 'Eka', points: 33 }, { name: 'Fajar', points: 47 },
+    { name: 'Gita', points: 29 }, { name: 'Hadi', points: 36 }
   ];
-  pointsStudents = sampleNames.map(name => ({ name, points: 0 }));
+  pointsStudents = sample;
   pointsSelectedIndices.clear();
   saveState('points-students', pointsStudents);
   renderPointsTable();
@@ -1208,6 +1248,7 @@ $('#points-export').addEventListener('click', () => {
   toast('Leaderboard diekspor', 'success');
 });
 
+// PERBAIKAN IMPOR CSV LEADERBOARD (Mendukung koma & titik koma, dengan/tanpa header, dengan/tanpa kolom poin)
 $('#points-import').addEventListener('click', () => $('#points-file').click());
 $('#points-file').addEventListener('change', e => {
   const file = e.target.files[0];
@@ -1215,18 +1256,34 @@ $('#points-file').addEventListener('change', e => {
   const reader = new FileReader();
   reader.onload = ev => {
     const text = ev.target.result;
-    const lines = text.split(/\r?\n/).slice(1);
+    const rawLines = text.split(/\r?\n/).map(l => l.trim()).filter(l => l);
+    if (rawLines.length === 0) {
+      toast('File CSV kosong', 'error');
+      return;
+    }
+
+    const firstCols = rawLines[0].split(/[,;]/).map(c => c.replace(/^"|"$/g, '').trim().toLowerCase());
+    const hasHeader = firstCols[0] === 'nama' || firstCols[0] === 'name';
+    const dataLines = hasHeader ? rawLines.slice(1) : rawLines;
+
     const imported = [];
-    lines.forEach(line => {
-      const match = line.match(/^"?([^",]+)"?\s*,\s*(\d+)/);
-      if (match) imported.push({ name: match[1].trim(), points: parseInt(match[2]) });
+    dataLines.forEach(line => {
+      const parts = line.split(/[,;]/).map(p => p.replace(/^"|"$/g, '').trim());
+      const name = parts[0];
+      const points = parts[1] !== undefined && parts[1] !== '' ? parseInt(parts[1], 10) : 0;
+      if (name) {
+        imported.push({ name, points: isNaN(points) ? 0 : Math.max(0, points) });
+      }
     });
-    if (imported.length) {
+
+    if (imported.length > 0) {
       pointsStudents = imported;
       pointsSelectedIndices.clear();
       saveState('points-students', pointsStudents);
       renderPointsTable();
       toast(`Berhasil impor ${imported.length} siswa`, 'success');
+    } else {
+      toast('Tidak ada data siswa valid di dalam file CSV', 'error');
     }
   };
   reader.readAsText(file);
@@ -1301,6 +1358,7 @@ function renderQuizQuestions() {
   quizCount.textContent = quizQuestions.length;
   if (quizQuestions.length === 0) {
     $('#quiz-empty').style.display = 'block';
+    renderQuizPreview();
     return;
   }
   $('#quiz-empty').style.display = 'none';
@@ -1350,8 +1408,41 @@ function renderQuizPreview() {
   `).join('');
 }
 
+function resetModalActions() {
+  $('#modal-actions').style.display = 'flex';
+  $('#modal-actions').innerHTML = `
+    <button class="btn btn-secondary" id="modal-cancel">Batal</button>
+    <button class="btn btn-primary" id="modal-confirm">OK</button>
+  `;
+  $('#modal-cancel').addEventListener('click', closeQuizModal);
+  $('#modal-confirm').addEventListener('click', saveQuizModal);
+}
+
+function saveQuizModal() {
+  const question = $('#quiz-q-text')?.value.trim();
+  if (!question) { toast('Pertanyaan wajib diisi', 'error'); return; }
+  const optionGroups = $$('#quiz-options-container .form-group');
+  const options = [];
+  optionGroups.forEach((g) => {
+    const text = g.querySelector('.quiz-opt-text').value.trim();
+    const correct = g.querySelector('input[type="radio"]').checked;
+    if (text) options.push({ text, correct });
+  });
+  if (options.length < 2) { toast('Minimal 2 opsi', 'error'); return; }
+  if (!options.some(o => o.correct)) { toast('Pilih satu jawaban benar', 'error'); return; }
+
+  if (quizEditingIndex >= 0) quizQuestions[quizEditingIndex] = { question, options };
+  else quizQuestions.push({ question, options });
+
+  saveState('quiz-questions', quizQuestions);
+  renderQuizQuestions();
+  closeQuizModal();
+  toast(quizEditingIndex >= 0 ? 'Soal diperbarui' : 'Soal ditambahkan', 'success');
+}
+
 function openQuizModal(index = -1) {
   quizEditingIndex = index;
+  resetModalActions();
   const q = index >= 0 ? quizQuestions[index] : { question: '', options: [{text:'',correct:false},{text:'',correct:false},{text:'',correct:false},{text:'',correct:false}] };
   $('#modal-title').textContent = index >= 0 ? `Edit Soal ${index+1}` : 'Tambah Soal Baru';
   $('#modal-body').innerHTML = `
@@ -1372,27 +1463,46 @@ function openQuizModal(index = -1) {
   `;
   $('#modal-overlay').classList.add('active');
 
-  $('#modal-body').addEventListener('change', e => {
-    if (e.target.matches('input[name="quiz-opt-correct"]')) {
-      $$('#modal-body input[name="quiz-opt-correct"]').forEach(r => r.checked = false);
-      e.target.checked = true;
-    }
-  });
-  $('#modal-body').addEventListener('click', e => {
-    if (e.target.closest('.quiz-opt-del')) {
-      const oi = +e.target.closest('.quiz-opt-del').dataset.oi;
-      const container = $('#quiz-options-container');
-      const inputs = container.querySelectorAll('.form-group');
-      if (inputs.length <= 2) { toast('Minimal 2 opsi', 'error'); return; }
-      inputs[oi].remove();
-      container.querySelectorAll('.form-group').forEach((g, i) => {
-        g.querySelector('input[type="radio"]').dataset.oi = i;
-        g.querySelector('.quiz-opt-text').placeholder = `Opsi ${String.fromCharCode(65+i)}`;
-        g.querySelector('.quiz-opt-del').dataset.oi = i;
-      });
-    }
+  // PERBAIKAN: Event listener #quiz-add-option dipasang di sini setelah elemennya dirender
+  $('#quiz-add-option').addEventListener('click', () => {
+    const container = $('#quiz-options-container');
+    const count = container.querySelectorAll('.form-group').length;
+    if (count >= 6) { toast('Maksimal 6 opsi', 'error'); return; }
+    const letter = String.fromCharCode(65 + count);
+    const div = document.createElement('div');
+    div.className = 'form-group';
+    div.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px;';
+    div.innerHTML = `
+      <input type="radio" name="quiz-opt-correct" data-oi="${count}" style="accent-color:var(--accent);width:18px;height:18px;">
+      <input type="text" class="quiz-opt-text" placeholder="Opsi ${letter}" style="flex:1;">
+      <button class="icon-btn danger quiz-opt-del" data-oi="${count}" aria-label="Hapus opsi ${letter}" style="width:36px;height:36px;">🗑</button>
+    `;
+    container.appendChild(div);
   });
 }
+
+// Delegasi event di dalam modal-body (dipasang sekali saja agar tidak menumpuk)
+$('#modal-body').addEventListener('change', e => {
+  if (e.target.matches('input[name="quiz-opt-correct"]')) {
+    $$('#modal-body input[name="quiz-opt-correct"]').forEach(r => r.checked = false);
+    e.target.checked = true;
+  }
+});
+
+$('#modal-body').addEventListener('click', e => {
+  if (e.target.closest('.quiz-opt-del')) {
+    const oi = +e.target.closest('.quiz-opt-del').dataset.oi;
+    const container = $('#quiz-options-container');
+    const inputs = container.querySelectorAll('.form-group');
+    if (inputs.length <= 2) { toast('Minimal 2 opsi', 'error'); return; }
+    inputs[oi].remove();
+    container.querySelectorAll('.form-group').forEach((g, i) => {
+      g.querySelector('input[type="radio"]').dataset.oi = i;
+      g.querySelector('.quiz-opt-text').placeholder = `Opsi ${String.fromCharCode(65+i)}`;
+      g.querySelector('.quiz-opt-del').dataset.oi = i;
+    });
+  }
+});
 
 function closeQuizModal() {
   $('#modal-overlay').classList.remove('active');
@@ -1400,31 +1510,7 @@ function closeQuizModal() {
   quizEditingIndex = -1;
 }
 
-$('#modal-cancel').addEventListener('click', closeQuizModal);
 $('#modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeQuizModal(); });
-
-$('#modal-confirm').addEventListener('click', () => {
-  const question = $('#quiz-q-text').value.trim();
-  const optionGroups = $$('#quiz-options-container .form-group');
-  const options = [];
-  optionGroups.forEach((g, i) => {
-    const text = g.querySelector('.quiz-opt-text').value.trim();
-    const correct = g.querySelector('input[type="radio"]').checked;
-    if (text) options.push({ text, correct });
-  });
-  if (!question) { toast('Pertanyaan wajib diisi', 'error'); return; }
-  if (options.length < 2) { toast('Minimal 2 opsi', 'error'); return; }
-  if (!options.some(o => o.correct)) { toast('Pilih satu jawaban benar', 'error'); return; }
-
-  if (quizEditingIndex >= 0) quizQuestions[quizEditingIndex] = { question, options };
-  else quizQuestions.push({ question, options });
-
-  saveState('quiz-questions', quizQuestions);
-  renderQuizQuestions();
-  closeQuizModal();
-  toast(quizEditingIndex >= 0 ? 'Soal diperbarui' : 'Soal ditambahkan', 'success');
-});
-
 $('#quiz-add').addEventListener('click', () => openQuizModal(-1));
 
 quizQuestionsEl.addEventListener('click', e => {
@@ -1446,22 +1532,6 @@ quizQuestionsEl.addEventListener('click', e => {
     renderQuizQuestions();
     toast('Soal diduplikat', 'success');
   }
-});
-
-$('#quiz-add-option').addEventListener('click', () => {
-  const container = $('#quiz-options-container');
-  const count = container.querySelectorAll('.form-group').length;
-  if (count >= 6) { toast('Maksimal 6 opsi', 'error'); return; }
-  const letter = String.fromCharCode(65 + count);
-  const div = document.createElement('div');
-  div.className = 'form-group';
-  div.style.cssText = 'display:flex;gap:8px;align-items:center;margin-bottom:8px;';
-  div.innerHTML = `
-    <input type="radio" name="quiz-opt-correct" data-oi="${count}" style="accent-color:var(--accent);width:18px;height:18px;">
-    <input type="text" class="quiz-opt-text" placeholder="Opsi ${letter}" style="flex:1;">
-    <button class="icon-btn danger quiz-opt-del" data-oi="${count}" aria-label="Hapus opsi ${letter}" style="width:36px;height:36px;">🗑</button>
-  `;
-  container.appendChild(div);
 });
 
 $('#quiz-export-json').addEventListener('click', () => {
@@ -1501,11 +1571,12 @@ $('#quiz-run').addEventListener('click', () => {
   function showQuestion() {
     const q = quizQuestions[currentQ];
     $('#modal-title').textContent = `Soal ${currentQ + 1} / ${quizQuestions.length}`;
+    $('#modal-actions').style.display = 'none';
     $('#modal-body').innerHTML = `
       <div style="font-size:18px;font-weight:600;margin-bottom:20px;">${escapeHtml(q.question)}</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
         ${q.options.map((opt, i) => `
-          <button class="btn btn-secondary quiz-answer-btn" data-index="${i}" style="text-align:left;padding:14px 16px;font-size:15px;">
+          <button class="btn btn-secondary quiz-answer-btn" data-index="${i}" style="text-align:left;justify-content:flex-start;padding:14px 16px;font-size:15px;">
             ${String.fromCharCode(65+i)}. ${escapeHtml(opt.text)}
           </button>
         `).join('')}
@@ -1540,6 +1611,7 @@ $('#quiz-run').addEventListener('click', () => {
         </div>
       </div>
     `;
+    $('#modal-actions').style.display = 'flex';
     $('#modal-actions').innerHTML = `
       <button class="btn btn-primary" id="quiz-restart">Main Lagi</button>
       <button class="btn btn-secondary" id="quiz-close-result">Tutup</button>
@@ -1745,11 +1817,6 @@ document.addEventListener('keydown', e => {
   }
   if (e.key === 'Escape') closeQuizModal();
 });
-
-// Service Worker registration for offline (optional)
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
 
 console.log('Classroom Toolkit loaded. Selamat mengajar, Imam! 🎓');
 </script>
